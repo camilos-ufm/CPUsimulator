@@ -39,14 +39,25 @@ class CU(IC):
 
         return "message loaded into ORegister"
 
-    def LD_A(self, arg):
-        return arg
+    def LD_A(self, RAMLoc):
+        data = self.ram.getData(RAMLoc)
+        self.a.setData(data)
+
+    def LD_B(self, RAMLoc):
+        data = self.ram.getData(RAMLoc)
+        self.b.setData(data)
+
+
 
     # Dictionary with commands and functions
     intructionSetTable = {
     "0000": OUTPUT,
     "OUTPUT": OUTPUT,
-    "0001": LD_A
+    "0001": LD_A,
+    "LD_A": LD_A,
+    "0010": LD_B,
+    "LD_B": LD_B,
+
     }
 
     def getFunction(self, opcode, arg):
