@@ -49,6 +49,14 @@ class CU(IC):
         data = self.ram.getData(pos)
         self.b.setData(data)
 
+    def AND(self, reg1, reg2):
+        reg1= 0
+        reg2= 0
+        return self.alu.AND(reg1,reg2)
+
+    def ILD_A (self, constant):
+        constant=self.a
+
     def STR_A (self, reg):
         data= self.a
         self.ram.setData(data)
@@ -56,13 +64,6 @@ class CU(IC):
     def STR_B (self, reg):
         data = self.b
         self.ram.setData(data)
-
-
-
-
-
-
-
 
     # Dictionary with commands and functions
     intructionSetTable = {
@@ -72,9 +73,9 @@ class CU(IC):
     "LD_A": LD_A,
     "0010": LD_B,
     "LD_B": LD_B,
-    "STR_A": STR_A,
     "0101": STR_A,
-    "STR_B": STR_B,
+    "STR_A": STR_A,
+    "0110": STR_B,
     "STR_B": STR_B
 
     }
