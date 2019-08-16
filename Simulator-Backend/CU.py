@@ -65,39 +65,39 @@ class CU(IC):
         data = self.b
         self.ram.setData(data)
 
+    def OR(self, arg):
+        reg1 = self.getRegLetter(arg[4:5])
+        reg2 = self.getRegLetter(arg[6:7])
+        return self.alu.OR(reg1, reg2) # calls the alu logic operation 'or'
+
     # Dictionary with commands and functions
     intructionSetTable = {
-    "0000": OUTPUT,
-    "OUTPUT": OUTPUT,
-    "0001": LD_A,
-    "LD_A": LD_A,
-    "0010": LD_B,
-    "LD_B": LD_B,
-    "0101": STR_A,
-    "STR_A": STR_A,
-    "0110": STR_B,
-    "STR_B": STR_B
+        "0000": OUTPUT,
+        "OUTPUT": OUTPUT,
+        "0001": LD_A,
+        "LD_A": LD_A,
+        "0010": LD_B,
+        "LD_B": LD_B,
+        "0101": STR_A,
+        "STR_A": STR_A,
+        "0110": STR_B,
+        "STR_B": STR_B
+    }
 
+    # Dictionary that returns for each 2bit code a letter corresponding to a reg
+    twoBitToRegLetter = {
+        "00": a,
+        "01": b,
+        "10": c,
+        "11": d
     }
 
     def getFunction(self, opcode, arg):
         return self.intructionSetTable[opcode](self, arg)
+
+    def getRegLetter(self, twobit):
+        return self.twoBitToRegLetter.get(twobit)
          
-
-# ---------------------------------------------------------------------
-def main():
-    ram = [1] * 16
-    cu = CU("intel", "2019-08-16", "manage everything", ram, 1.2, True)
-
-    code = open(".code", "r")
-    codelines = code.readlines()
-
-    for line in codelines:
-        if(line[0]!="#"):
-            print(cu.getFunction((line[0:4]),line[4:]))
-
-if __name__== "__main__":
-  main()
 
 
 
