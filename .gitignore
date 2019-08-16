@@ -622,5 +622,17 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.gitignore.io/api/linux,macos,flask,python,windows,reactnative,visualstudiocode
+
+# Created by https://www.gitignore.io/api/vuejs
+# Edit at https://www.gitignore.io/?templates=vuejs
+
+### Vuejs ###
+# Recommended template: Node.gitignore
+
+node_modules/
+dist/
+npm-debug.log
+yarn-error.log
+
+# End of https://www.gitignore.io/api/linux,macos,flask,python,windows,reactnative,visualstudiocode,vuejs
 
