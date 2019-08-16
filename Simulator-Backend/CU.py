@@ -72,6 +72,10 @@ class CU(IC):
     "LD_A": LD_A,
     "0010": LD_B,
     "LD_B": LD_B,
+    "STR_A": STR_A,
+    "0101": STR_A,
+    "STR_B": STR_B,
+    "STR_B": STR_B
 
     }
 
