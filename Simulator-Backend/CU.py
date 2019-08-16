@@ -39,8 +39,31 @@ class CU(IC):
 
         return "message loaded into ORegister"
 
-    def LD_A(self, arg):
-        return arg
+    def LD_A(self, RAMLoc):
+        pos = int(RAMLoc,2)
+        data = self.ram.getData(pos)
+        self.a.setData(data)
+
+    def LD_B(self, RAMLoc):
+        pos =int(RAMLoc,2)
+        data = self.ram.getData(pos)
+        self.b.setData(data)
+
+    def AND(self, reg1, reg2):
+        reg1= 0
+        reg2= 0
+        return self.alu.AND(reg1,reg2)
+
+    def ILD_A (self, constant):
+        constant=self.a
+
+    def STR_A (self, reg):
+        data= self.a
+        self.ram.setData(data)
+
+    def STR_B (self, reg):
+        data = self.b
+        self.ram.setData(data)
 
     def OR(self, arg):
         reg1 = self.getRegLetter(arg[4:5])
@@ -51,7 +74,14 @@ class CU(IC):
     intructionSetTable = {
         "0000": OUTPUT,
         "OUTPUT": OUTPUT,
-        "0001": LD_A
+        "0001": LD_A,
+        "LD_A": LD_A,
+        "0010": LD_B,
+        "LD_B": LD_B,
+        "0101": STR_A,
+        "STR_A": STR_A,
+        "0110": STR_B,
+        "STR_B": STR_B
     }
 
     # Dictionary that returns for each 2bit code a letter corresponding to a reg
