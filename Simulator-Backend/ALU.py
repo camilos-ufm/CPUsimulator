@@ -23,3 +23,6 @@ class ALU(IC):
 
     def AND(self, num1, num2):
         return int((num1 !=0) and (num2 !=0))
+
+    def ADD(self, num1, num2):
+        return num1 + num2

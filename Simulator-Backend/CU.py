@@ -73,6 +73,11 @@ class CU(IC):
     def ILD_B(self, const):
         self.b = const
 
+    def ADD(self,arg):
+        reg1 = self.getRegLetter(arg[4:5]) # extracts the first 2-bit from the 8bit value
+        reg2 = self.getRegLetter(arg[6:7]) # extracts the second 2-bit from the 8bit value
+        reg2 = self.alu.ADD(reg1,reg2)     # sets the addition to the second reg
+
     # Dictionary with commands and functions
     intructionSetTable = {
         "0000": OUTPUT,
