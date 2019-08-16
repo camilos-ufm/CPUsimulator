@@ -17,3 +17,6 @@ class ALU(IC):
     
     def getOverflow(self):
         return self.overflow
+
+    def AND(self, num1, num2):
+        return int((num1 !=0) and (num2 !=0))
