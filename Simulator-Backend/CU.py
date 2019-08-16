@@ -42,15 +42,31 @@ class CU(IC):
     def LD_A(self, arg):
         return arg
 
+    def OR(self, arg):
+        reg1 = self.getRegLetter(arg[4:5])
+        reg2 = self.getRegLetter(arg[6:7])
+        return self.alu.OR(reg1, reg2) # calls the alu logic operation 'or'
+
     # Dictionary with commands and functions
     intructionSetTable = {
-    "0000": OUTPUT,
-    "OUTPUT": OUTPUT,
-    "0001": LD_A
+        "0000": OUTPUT,
+        "OUTPUT": OUTPUT,
+        "0001": LD_A
+    }
+
+    # Dictionary that returns for each 2bit code a letter corresponding to a reg
+    twoBitToRegLetter = {
+        "00": a,
+        "01": b,
+        "10": c,
+        "11": d
     }
 
     def getFunction(self, opcode, arg):
         return self.intructionSetTable[opcode](self, arg)
+
+    def getRegLetter(self, twobit):
+        return self.twoBitToRegLetter.get(twobit)
          
 
 

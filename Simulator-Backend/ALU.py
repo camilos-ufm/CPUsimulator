@@ -17,3 +17,6 @@ class ALU(IC):
     
     def getOverflow(self):
         return self.overflow
+
+    def OR(self, num1, num2):
+        return int((num1 != 0) or (num2 != 0)) # returns 1 if any of nums is not == 0, else 0
