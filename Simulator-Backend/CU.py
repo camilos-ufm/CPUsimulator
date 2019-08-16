@@ -59,11 +59,15 @@ class CU(IC):
 
     def STR_A (self, reg):
         data= self.a
-        self.ram.setData(data)
+        for i in range(0, 16):
+            if self.ram.setData[i] == None:
+                self.ram.setData[i](data)
 
     def STR_B (self, reg):
         data = self.b
-        self.ram.setData(data)
+        for i in range(0, 16):
+            if self.ram.setData[i] == None:
+                self.ram.setData[i](data)
 
     def OR(self, arg):
         reg1 = self.getRegLetter(arg[4:5])
@@ -88,9 +92,6 @@ class CU(IC):
         "STR_B": STR_B,
         "0111": OR,
         "OR": OR,
-
-
-
     }
 
     # Dictionary that returns for each 2bit code a letter corresponding to a reg
