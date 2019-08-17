@@ -39,18 +39,77 @@ class CU(IC):
 
         return "message loaded into ORegister"
 
-    def LD_A(self, arg):
-        return arg
+    def LD_A(self, RAMLoc):
+        pos = int(RAMLoc,2)
+        data = self.ram.getData(pos)
+        self.a.setData(data)
 
-    # Dictionary with commands and functions
+    def LD_B(self, RAMLoc):
+        pos =int(RAMLoc,2)
+        data = self.ram.getData(pos)
+        self.b.setData(data)
+
+    def AND(self, reg1, reg2):
+        reg1= 0
+        reg2= 0
+        return self.alu.AND(reg1,reg2)
+
+    def ILD_A (self, constant):
+        constant=self.a
+
+    def STR_A (self, reg):
+        data= self.a
+        self.ram.setData(data)
+
+    def STR_B (self, reg):
+        data = self.b
+        self.ram.setData(data)
+
+    def OR(self, arg):
+        reg1 = self.getRegLetter(arg[4:5]) # extracts the first 2-bit from the 8bit value
+        reg2 = self.getRegLetter(arg[6:7]) # extracts the second 2-bit from the 8bit value
+        return self.alu.OR(reg1, reg2) # calls the alu logic operation 'or'
+
+    def ILD_B(self, const):
+        self.b = const
+
+    def ADD(self, arg):
+        reg1 = self.getRegLetter(arg[4:5]) # extracts the first 2-bit from the 8bit value
+        reg2 = self.getRegLetter(arg[6:7]) # extracts the second 2-bit from the 8bit value
+        reg2 = self.alu.ADD(reg1,reg2)     # sets the addition to the second reg
+
+    def SUB(self, arg):
+        reg1 = self.getRegLetter(arg[4:5]) # extracts the first 2-bit from the 8bit value
+        reg2 = self.getRegLetter(arg[6:7]) # extracts the second 2-bit from the 8bit value
+        reg2 = self.alu.SUB(reg1,reg2)     # sets the addition to the second reg
+
+    # Dictionary with co    mmands and functions
     intructionSetTable = {
-    "0000": OUTPUT,
-    "OUTPUT": OUTPUT,
-    "0001": LD_A
+        "0000": OUTPUT,
+        "OUTPUT": OUTPUT,
+        "0001": LD_A,
+        "LD_A": LD_A,
+        "0010": LD_B,
+        "LD_B": LD_B,
+        "0101": STR_A,
+        "STR_A": STR_A,
+        "0110": STR_B,
+        "STR_B": STR_B
+    }
+
+    # Dictionary that returns for each 2bit code a letter corresponding to a reg
+    twoBitToRegLetter = {
+        "00": a,
+        "01": b,
+        "10": c,
+        "11": d
     }
 
     def getFunction(self, opcode, arg):
         return self.intructionSetTable[opcode](self, arg)
+
+    def getRegLetter(self, twobit):
+        return self.twoBitToRegLetter.get(twobit)
          
 
 
