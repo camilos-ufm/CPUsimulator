@@ -58,12 +58,16 @@ class CU(IC):
         constant=self.a
 
     def STR_A (self, reg):
-        data= self.a
-        self.ram.setData(data)
+        data = self.a.getData()
+        for i in range(0, 16):
+            if self.ram.getData(i) == None:
+                self.ram.setData(i, data)
 
     def STR_B (self, reg):
-        data = self.b
-        self.ram.setData(data)
+            data = self.b.getData()
+            for i in range(0, 16):
+                if self.ram.getData(i) == None:
+                    self.ram.setData(i, data)
 
     def OR(self, arg):
         reg1 = self.getRegLetter(arg[4:5]) # extracts the first 2-bit from the 8bit value
