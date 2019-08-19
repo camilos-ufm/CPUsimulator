@@ -13,6 +13,9 @@ class CU(IC):
     b = None
     c = None
     d = None
+    rc = None
+    ir = None
+    or_reg = None
     #special register for output
     oR = None
     clock = None
@@ -74,7 +77,7 @@ class CU(IC):
     def OR(self, arg):
         reg1 = self.getRegLetter(arg[4:5]) # extracts the first 2-bit from the 8bit value
         reg2 = self.getRegLetter(arg[6:7]) # extracts the second 2-bit from the 8bit value
-        return self.alu.OR(reg1, reg2) # calls the alu logic operation 'or'
+        return self.alu.OR(reg1, reg2)     # calls the alu logic operation 'or'
 
     def ILD_B(self, const):
         self.b = const
@@ -89,7 +92,10 @@ class CU(IC):
         reg2 = self.getRegLetter(arg[6:7]) # extracts the second 2-bit from the 8bit value
         reg2 = self.alu.SUB(reg1,reg2)     # sets the addition to the second reg
 
-    # Dictionary with co    mmands and functions
+    # def JMP(self, arg):
+
+
+    # Dictionary with commands and functions
     intructionSetTable = {
         "0000": OUTPUT,
         "OUTPUT": OUTPUT,
@@ -106,7 +112,7 @@ class CU(IC):
         "0110": STR_B,
         "STR_B": STR_B,
         "0111": OR,
-        "OR": OR,
+        "OR": OR
     }
 
     # Dictionary that returns for each 2bit code a letter corresponding to a reg
