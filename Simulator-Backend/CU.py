@@ -57,17 +57,7 @@ class CU(IC):
     def ILD_A (self, constant):
         constant=self.a
 
-    def STR_A (self, reg):
-        data= self.a
-        for i in range(0, 16):
-            if self.ram.setData[i] == None:
-                self.ram.setData[i](data)
 
-    def STR_B (self, reg):
-        data = self.b
-        for i in range(0, 16):
-            if self.ram.setData[i] == None:
-                self.ram.setData[i](data)
 
     def OR(self, arg):
         reg1 = self.getRegLetter(arg[4:5])
@@ -86,10 +76,10 @@ class CU(IC):
         "AND": AND,
         "0100": ILD_A,
         "ILD_A": ILD_A,
-        "0101": STR_A,
-        "STR_A": STR_A,
-        "0110": STR_B,
-        "STR_B": STR_B,
+        #"0101": STR_A,
+        #"STR_A": STR_A,
+        #"0110": STR_B,
+        #"STR_B": STR_B,
         "0111": OR,
         "OR": OR,
     }
