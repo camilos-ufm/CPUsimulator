@@ -59,7 +59,7 @@ class CU(IC):
 
     def STR_A (self, reg):
         data= self.a
-        self.ram.setData(data)
+        self.ram.setData(pos, data)
 
     def STR_B (self, reg):
         data = self.b
@@ -83,7 +83,7 @@ class CU(IC):
         reg2 = self.getRegLetter(arg[6:7]) # extracts the second 2-bit from the 8bit value
         reg2 = self.alu.SUB(reg1,reg2)     # sets the addition to the second reg
 
-    # Dictionary with co    mmands and functions
+    # Dictionary with commands and functions
     intructionSetTable = {
         "0000": OUTPUT,
         "OUTPUT": OUTPUT,
