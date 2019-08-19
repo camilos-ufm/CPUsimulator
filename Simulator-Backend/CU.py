@@ -49,15 +49,16 @@ class CU(IC):
         data = self.ram.getData(pos)
         self.b.setData(data)
 
-    def AND(self, reg1, reg2):
-        reg1= 0
-        reg2= 0
+    def AND(self, arg):
+        reg1= self.getRegLetter(arg[0:1])
+        reg2= self.getRegLetter(arg[2:3])
         return self.alu.AND(reg1,reg2)
 
     def ILD_A (self, constant):
         constant=self.a
 
     def STR_A (self, reg):
+
         data = self.a.getData()
         for i in range(0, 16):
             if self.ram.getData(i) == None:
@@ -68,6 +69,7 @@ class CU(IC):
             for i in range(0, 16):
                 if self.ram.getData(i) == None:
                     self.ram.setData(i, data)
+
 
     def OR(self, arg):
         reg1 = self.getRegLetter(arg[4:5]) # extracts the first 2-bit from the 8bit value
@@ -95,10 +97,16 @@ class CU(IC):
         "LD_A": LD_A,
         "0010": LD_B,
         "LD_B": LD_B,
+        "0011": AND,
+        "AND": AND,
+        "0100": ILD_A,
+        "ILD_A": ILD_A,
         "0101": STR_A,
         "STR_A": STR_A,
         "0110": STR_B,
-        "STR_B": STR_B
+        "STR_B": STR_B,
+        "0111": OR,
+        "OR": OR,
     }
 
     # Dictionary that returns for each 2bit code a letter corresponding to a reg
