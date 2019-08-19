@@ -50,15 +50,14 @@ class CU(IC):
         self.b.setData(data)
 
     def AND(self, arg):
-        reg1= self.getRegLetter(arg[0:1])
-        reg2= self.getRegLetter(arg[2:3])
+        reg1= self.getRegLetter(arg[4:5])
+        reg2= self.getRegLetter(arg[6:7])
         return self.alu.AND(reg1,reg2)
 
     def ILD_A (self, constant):
         constant=self.a
 
     def STR_A (self, reg):
-
         data = self.a.getData()
         for i in range(0, 16):
             if self.ram.getData(i) == None:
@@ -69,7 +68,6 @@ class CU(IC):
             for i in range(0, 16):
                 if self.ram.getData(i) == None:
                     self.ram.setData(i, data)
-
 
     def OR(self, arg):
         reg1 = self.getRegLetter(arg[4:5]) # extracts the first 2-bit from the 8bit value
@@ -89,7 +87,7 @@ class CU(IC):
         reg2 = self.getRegLetter(arg[6:7]) # extracts the second 2-bit from the 8bit value
         reg2 = self.alu.SUB(reg1,reg2)     # sets the addition to the second reg
 
-    # Dictionary with co    mmands and functions
+    # Dictionary with commands and functions
     intructionSetTable = {
         "0000": OUTPUT,
         "OUTPUT": OUTPUT,
@@ -107,6 +105,13 @@ class CU(IC):
         "STR_B": STR_B,
         "0111": OR,
         "OR": OR,
+        "1000": ILD_B,
+        "ILD_B": ILD_B,
+        "1001": ADD,
+        "ADD": ADD,
+        "1011": SUB,
+        "SUB": SUB,
+
     }
 
     # Dictionary that returns for each 2bit code a letter corresponding to a reg
