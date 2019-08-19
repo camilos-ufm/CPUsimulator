@@ -128,10 +128,21 @@ class CU(IC):
 
     def getRegLetter(self, twobit):
         return self.twoBitToRegLetter.get(twobit)
-         
 
+    def initBios(self, string):
+        pass
 
+    def startInstructions(self, codelines):
+        for line in codelines:
+            if(line[0]!="#"):
+                self.fetch(line)
 
+    def fetch(self, codeline):
+        self.decode((codeline[0:4]),codeline[4:])
 
+    def decode(self, opcode, param):
+        function = self.intructionSetTable[opcode]
+        self.execute(function, param)
 
-
+    def execute(self, function, param):
+        function(self, param)

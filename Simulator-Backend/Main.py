@@ -7,9 +7,7 @@ def main():
     code = open("../.code", "r")
     codelines = code.readlines()
 
-    for line in codelines:
-        if(line[0]!="#"):
-            print(cu.getFunction((line[0:4]),line[4:]))
+    cu.startInstructions(codelines)
 
 if __name__== "__main__":
   main()
