@@ -128,10 +128,3 @@ class CU(IC):
 
     def getRegLetter(self, twobit):
         return self.twoBitToRegLetter.get(twobit)
-         
-
-
-
-
-
- 
