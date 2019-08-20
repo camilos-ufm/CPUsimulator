@@ -93,6 +93,15 @@ class CU(IC):
         reg2 = self.getRegLetter(arg[6:7]) # extracts the second 2-bit from the 8bit value
         reg2 = self.alu.SUB(reg1,reg2)     # sets the addition to the second reg
 
+    def JMP(self, arg):
+        self.pc = arg
+
+    def JMP_N(self, arg):
+        if (self.alu.getNegative() is not 1):
+            self.JMP(arg)
+        else:
+            pass
+        
     # Dictionary with commands and functions
     intructionSetTable = {
         "0000": OUTPUT,
