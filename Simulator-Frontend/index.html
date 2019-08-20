@@ -251,7 +251,14 @@
                         <div class="col-lg-7 col-md-12">
                             <div class="text-widget">
                                 <h3>Actual simulator monitor</h3>
-    
+                                <div id="app">
+                                        <h2>Sample Get:</h2>
+                                        <button v-on:click="getSampleData()">Click to Get Sample data</button>
+                                        <div>{{getResult}}</div>
+                                        <h2>Sample Post:</h2>
+                                        <button v-on:click="postSampleData()">Click to Post Sample data</button>
+                                        <div>{{postResult}}</div>
+                                    </div>
                                 <p>some description lol</p>
                                 <div class="clearfix"></div>
     

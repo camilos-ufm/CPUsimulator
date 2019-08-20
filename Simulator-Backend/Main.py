@@ -1,11 +1,21 @@
 from CU import CU
 from flask import Flask
+from flask_cors import CORS
+import json 
 
 app = Flask(__name__)
+CORS(app)
+
+response = {
+  "message": "Hello World"
+}
+
+# convert into JSON:
+y = json.dumps(response)
 
 @app.route("/")
 def hello():
-    return "Hello World!"
+    return y
 
 def main():
     ram = [1] * 16
