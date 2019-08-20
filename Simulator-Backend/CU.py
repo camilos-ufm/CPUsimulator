@@ -152,11 +152,13 @@ class CU(IC):
                 self.fetch(line)
 
     def fetch(self, codeline):
-        self.decode((codeline[0:4]),codeline[4:])
+        self.decode(codeline)
 
-    def decode(self, opcode, param):
-        function = self.intructionSetTable[opcode]
-        self.execute(function, param)
+    def decode(self, lineOfCode):
+        stringFunction = lineOfCode.split()[1]
+        function = self.intructionSetTable.get(stringFunction)
+        arguments = lineOfCode.split()[2:]
+        self.execute(function, arguments)
 
     def execute(self, function, param):
         function(self, param)
