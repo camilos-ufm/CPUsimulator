@@ -7,8 +7,9 @@ verify_ssl = true
 pytest = "*"
 
 [packages]
-flask = "==0.12.1"
+flask = "*"
 numpy = "*"
+flask-cors = "*"
 
 [requires]
 python_version = "3.7"
