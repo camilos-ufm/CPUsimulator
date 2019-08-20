@@ -90,8 +90,8 @@ class CU(IC):
         print(reg2)
 
     def SUB(self, arg):
-        reg1 = arg.split()[0]               # extracts the first 2-bit from the 8bit value
-        reg2 = arg.split()[1]               # extracts the first 2-bit from the 8bit value
+        reg1 = arg[0]               # extracts the first 2-bit from the 8bit value
+        reg2 = arg[1]               # extracts the first 2-bit from the 8bit value
         reg2 = self.alu.SUB(reg1,reg2)      # sets the addition to the second reg
 
     def JMP(self, arg):
