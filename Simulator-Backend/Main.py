@@ -8,6 +8,5 @@ def main():
     codelines = code.readlines()
 
     cu.startInstructions(codelines)
-
 if __name__== "__main__":
   main()
