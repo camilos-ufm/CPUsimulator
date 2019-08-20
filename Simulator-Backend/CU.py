@@ -84,8 +84,8 @@ class CU(IC):
         self.b = const
 
     def ADD(self, arg):
-        reg1 = arg.split()[0]                       # extracts the first 2-bit from the 8bit value
-        reg2 = arg.split()[1]                       # extracts the first 2-bit from the 8bit value
+        reg1 = arg[0]                       # extracts the first 2-bit from the 8bit value
+        reg2 = arg[1]                       # extracts the first 2-bit from the 8bit value
         reg2 = self.alu.ADD(reg1,reg2)      # sets the addition to the second reg
         print(reg2)
 
