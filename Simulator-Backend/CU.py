@@ -41,23 +41,23 @@ class CU(IC):
     def OUTPUT(self, arg):
         pos = int(arg,2) #convert binary to decimal
         data = self.ram.getData(pos) #retrieve data from RAM at position pos
-        self.oR.setData(data) #set data into ORegister
+        self.oR.setDatax(data) #set data into ORegister
 
         return "message loaded into ORegister"
 
     def LD_A(self, RAMLoc):
-        pos = int(RAMLoc,2)
+        pos = int(RAMLoc, 2)
         data = self.ram.getData(pos)
         self.a.setData(data)
 
     def LD_B(self, RAMLoc):
-        pos =int(RAMLoc,2)
+        pos =int(RAMLoc, 2)
         data = self.ram.getData(pos)
         self.b.setData(data)
 
     def AND(self, arg):
-        reg1= self.getRegLetter(arg[4:5])
-        reg2= self.getRegLetter(arg[6:7])
+        reg1 = arg.split()[0]
+        reg2 = arg.split()[1]
         return self.alu.AND(reg1,reg2)
 
     def ILD_A (self, constant):
@@ -76,23 +76,32 @@ class CU(IC):
                     self.ram.setData(i, data)
 
     def OR(self, arg):
-        reg1 = self.getRegLetter(arg[4:5]) # extracts the first 2-bit from the 8bit value
-        reg2 = self.getRegLetter(arg[6:7]) # extracts the second 2-bit from the 8bit value
-        return self.alu.OR(reg1, reg2) # calls the alu logic operation 'or'
+        reg1 = arg.split()[0]               # extracts the first 2-bit from the 8bit value
+        reg2 = arg.split()[1]               # extracts the first 2-bit from the 8bit value
+        return self.alu.OR(reg1, reg2)      # calls the alu logic operation 'or'
 
     def ILD_B(self, const):
         self.b = const
 
     def ADD(self, arg):
-        reg1 = self.getRegLetter(arg[4:5]) # extracts the first 2-bit from the 8bit value
-        reg2 = self.getRegLetter(arg[6:7]) # extracts the second 2-bit from the 8bit value
-        reg2 = self.alu.ADD(reg1,reg2)     # sets the addition to the second reg
+        reg1 = arg.split()[0]               # extracts the first 2-bit from the 8bit value
+        reg2 = arg.split()[1]               # extracts the first 2-bit from the 8bit value
+        reg2 = self.alu.ADD(reg1,reg2)      # sets the addition to the second reg
 
     def SUB(self, arg):
-        reg1 = self.getRegLetter(arg[4:5]) # extracts the first 2-bit from the 8bit value
-        reg2 = self.getRegLetter(arg[6:7]) # extracts the second 2-bit from the 8bit value
-        reg2 = self.alu.SUB(reg1,reg2)     # sets the addition to the second reg
+        reg1 = arg.split()[0]               # extracts the first 2-bit from the 8bit value
+        reg2 = arg.split()[1]               # extracts the first 2-bit from the 8bit value
+        reg2 = self.alu.SUB(reg1,reg2)      # sets the addition to the second reg
 
+    def JMP(self, arg):
+        self.pc = arg
+
+    def JMP_N(self, arg):
+        if (self.alu.getNegative() is not 1):
+            self.JMP(arg)
+        else:
+            pass
+        
     # Dictionary with commands and functions
     intructionSetTable = {
         "0000": OUTPUT,
@@ -143,11 +152,13 @@ class CU(IC):
                 self.fetch(line)
 
     def fetch(self, codeline):
-        self.decode((codeline[0:4]),codeline[4:])
+        self.decode(codeline)
 
-    def decode(self, opcode, param):
-        function = self.intructionSetTable[opcode]
-        self.execute(function, param)
+    def decode(self, lineOfCode):
+        stringFunction = lineOfCode.split()[0]
+        function = self.intructionSetTable.get(stringFunction)
+        arguments = lineOfCode.split()[1:]
+        self.execute(function, arguments)
 
     def execute(self, function, param):
         function(self, param)
