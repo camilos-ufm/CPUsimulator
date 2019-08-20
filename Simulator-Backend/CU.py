@@ -162,3 +162,6 @@ class CU(IC):
 
     def execute(self, function, param):
         function(self, param)
+
+    def printStatus(self):
+        return "status:"        
