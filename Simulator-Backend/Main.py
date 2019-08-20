@@ -18,6 +18,7 @@ def hello():
     return y
 
 def main():
+    
     ram = [1] * 16
     cu = CU("intel", "2019-08-16", "manage everything", ram, 1.2, True)
 
@@ -27,4 +28,4 @@ def main():
     cu.startInstructions(codelines)
 if __name__== "__main__":
   main()
-  app.run(debug=True)
+  app.run(debug=False)
