@@ -1,4 +1,11 @@
 from CU import CU
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def hello():
+    return "Hello World!"
 
 def main():
     ram = [1] * 16
@@ -10,3 +17,4 @@ def main():
     cu.startInstructions(codelines)
 if __name__== "__main__":
   main()
+  app.run(debug=True)
