@@ -41,17 +41,17 @@ class CU(IC):
     def OUTPUT(self, arg):
         pos = int(arg,2) #convert binary to decimal
         data = self.ram.getData(pos) #retrieve data from RAM at position pos
-        self.oR.setData(data) #set data into ORegister
+        self.oR.setDatax(data) #set data into ORegister
 
         return "message loaded into ORegister"
 
     def LD_A(self, RAMLoc):
-        pos = int(RAMLoc)
+        pos = int(RAMLoc, 2)
         data = self.ram.getData(pos)
         self.a.setData(data)
 
     def LD_B(self, RAMLoc):
-        pos =int(RAMLoc)
+        pos =int(RAMLoc, 2)
         data = self.ram.getData(pos)
         self.b.setData(data)
 
@@ -91,7 +91,7 @@ class CU(IC):
     def SUB(self, arg):
         reg1 = arg.split()[0]               # extracts the first 2-bit from the 8bit value
         reg2 = arg.split()[1]               # extracts the first 2-bit from the 8bit value
-        reg2 = self.alu.SUB(reg1,reg2)     # sets the addition to the second reg
+        reg2 = self.alu.SUB(reg1,reg2)      # sets the addition to the second reg
 
     def JMP(self, arg):
         self.pc = arg
