@@ -33,6 +33,7 @@ class CU(IC):
         self.d = Register(manufacturer,build_date,"Register D", 4, "")
 
         self.pc = Register(manufacturer,build_date,"Program Counter",4,0)
+        self.ir = Register(manufacturer,build_date,"Instruction Register",4,"")
         self.oR = ORegister(manufacturer,build_date,"Output Register", 4, "")
         self.visualizations = visualizations
 
