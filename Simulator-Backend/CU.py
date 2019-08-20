@@ -155,9 +155,9 @@ class CU(IC):
         self.decode(codeline)
 
     def decode(self, lineOfCode):
-        stringFunction = lineOfCode.split()[1]
+        stringFunction = lineOfCode.split()[0]
         function = self.intructionSetTable.get(stringFunction)
-        arguments = lineOfCode.split()[2:]
+        arguments = lineOfCode.split()[1:]
         self.execute(function, arguments)
 
     def execute(self, function, param):
