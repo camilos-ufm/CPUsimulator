@@ -56,8 +56,8 @@ class CU(IC):
         self.b.setData(data)
 
     def AND(self, arg):
-        reg1= self.getRegLetter(arg[4:5])
-        reg2= self.getRegLetter(arg[6:7])
+        reg1 = arg.split()[0]
+        reg2 = arg.split()[1]
         return self.alu.AND(reg1,reg2)
 
     def ILD_A (self, constant):
