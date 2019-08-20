@@ -14,8 +14,9 @@ class CU(IC):
     b = None
     c = None
     d = None
-    pc = None
+    
     #special register for output
+    pc = None
     oR = None
     clock = None
     visualizations = None
