@@ -76,8 +76,8 @@ class CU(IC):
                     self.ram.setData(i, data)
 
     def OR(self, arg):
-        reg1 = arg.split()[0]               # extracts the first 2-bit from the 8bit value
-        reg2 = arg.split()[1]               # extracts the first 2-bit from the 8bit value
+        reg1 = arg[0]               # extracts the first 2-bit from the 8bit value
+        reg2 = arg[1]               # extracts the first 2-bit from the 8bit value
         return self.alu.OR(reg1, reg2)      # calls the alu logic operation 'or'
 
     def ILD_B(self, const):
