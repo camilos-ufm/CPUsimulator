@@ -46,12 +46,12 @@ class CU(IC):
         return "message loaded into ORegister"
 
     def LD_A(self, RAMLoc):
-        pos = int(RAMLoc,2)
+        pos = int(RAMLoc)
         data = self.ram.getData(pos)
         self.a.setData(data)
 
     def LD_B(self, RAMLoc):
-        pos =int(RAMLoc,2)
+        pos =int(RAMLoc)
         data = self.ram.getData(pos)
         self.b.setData(data)
 
