@@ -39,9 +39,9 @@ class CU(IC):
 
     # Intruction Set Table 
     def OUTPUT(self, arg):
-        pos = int(arg,2) #convert binary to decimal
+        pos = int(arg) #convert binary to decimal
         data = self.ram.getData(pos) #retrieve data from RAM at position pos
-        self.oR.setDatax(data) #set data into ORegister
+        self.oR.setData(data) #set data into ORegister
 
         return "message loaded into ORegister"
 
@@ -84,9 +84,10 @@ class CU(IC):
         self.b = const
 
     def ADD(self, arg):
-        reg1 = arg.split()[0]               # extracts the first 2-bit from the 8bit value
-        reg2 = arg.split()[1]               # extracts the first 2-bit from the 8bit value
+        reg1 = arg.split()[0]                       # extracts the first 2-bit from the 8bit value
+        reg2 = arg.split()[1]                       # extracts the first 2-bit from the 8bit value
         reg2 = self.alu.ADD(reg1,reg2)      # sets the addition to the second reg
+        print(reg2)
 
     def SUB(self, arg):
         reg1 = arg.split()[0]               # extracts the first 2-bit from the 8bit value
@@ -157,10 +158,16 @@ class CU(IC):
     def decode(self, lineOfCode):
         stringFunction = lineOfCode.split()[0]
         function = self.intructionSetTable.get(stringFunction)
-        arguments = lineOfCode.split()[1:]
+        if (len(lineOfCode.split()) == 3):
+            arguments = lineOfCode.split()[1:]
+            arguments = list(map(int, arguments))
+            print(arguments)
+        else:
+            arguments = lineOfCode.split()[1]
         self.execute(function, arguments)
 
     def execute(self, function, param):
+        print(param)
         function(self, param)
 
     def printStatus(self):
