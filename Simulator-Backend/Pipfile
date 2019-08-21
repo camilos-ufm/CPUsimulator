@@ -8,7 +8,6 @@ pytest = "*"
 
 [packages]
 flask = "*"
-numpy = "*"
 flask-cors = "*"
 
 [requires]
