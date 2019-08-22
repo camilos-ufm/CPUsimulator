@@ -1,11 +1,22 @@
 FROM python:alpine
+#COPY /Simulator-Frontend /usr/share/nginx/html
+
+#FROM python:alpine
 
 RUN pip install pipenv
 
-ADD / tmp
+# They will be served by Nginx directly, without being handled by uWSGI
+#ENV STATIC_URL /tmp/Simulator-Frontend
+# Absolute path in where the static files wil be
+#ENV STATIC_PATH /tmp/Simulator-Frontend
 
-RUN cd /tmp/Simulator-Backend && pipenv install --ignore-pipfile
+# If STATIC_INDEX is 1, serve / with /static/index.html directly (or the static URL configured)
+ENV STATIC_INDEX 1
 
-WORKDIR /tmp/Simulator-Backend
+ADD / home
+
+RUN cd /home/Simulator-Backend && pipenv install --ignore-pipfile
+
+WORKDIR /home/Simulator-Backend
 
 CMD ["pipenv", "run", "python3", "Main.py"]

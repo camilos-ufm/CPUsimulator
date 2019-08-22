@@ -28,4 +28,4 @@ def main():
     cu.startInstructions(codelines)
 if __name__== "__main__":
   main()
-  app.run(debug=False)
+  app.run(host= '0.0.0.0')
