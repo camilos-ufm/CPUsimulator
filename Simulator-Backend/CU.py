@@ -127,7 +127,10 @@ class CU(IC):
         "ADD": ADD,
         "1011": SUB,
         "SUB": SUB,
-
+        "1011": JMP,
+        "JMP": JMP,
+        "1100": JMP_N,
+        "JMP_N": JMP_N
     }
 
     # Dictionary that returns for each 2bit code a letter corresponding to a reg
