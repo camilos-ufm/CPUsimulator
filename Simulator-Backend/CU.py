@@ -96,7 +96,7 @@ class CU(IC):
         reg2 = self.alu.SUB(reg1,reg2)      # sets the addition to the second reg
 
     def JMP(self, arg):
-        self.pc = arg
+        self.ir = arg
 
     def JMP_N(self, arg):
         if (self.alu.getNegative() is not 1):
@@ -163,6 +163,7 @@ class CU(IC):
         stringFunction = lineOfCode.split()[0]
         function = self.intructionSetTable.get(stringFunction)
         self.pc.setData(function)
+        self.ir = function
         if (len(lineOfCode.split()) == 3):
             arguments = lineOfCode.split()[1:]
             arguments = list(map(int, arguments))
