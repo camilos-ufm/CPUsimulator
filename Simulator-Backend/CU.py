@@ -4,6 +4,7 @@ from RAM import RAM
 from ALU import ALU
 from Register import Register
 from ORegister import ORegister
+from PC import PC
 
 class CU(IC):
     #attributes for CU
@@ -32,7 +33,7 @@ class CU(IC):
         self.c = Register(manufacturer,build_date,"Register C", 4, "")
         self.d = Register(manufacturer,build_date,"Register D", 4, "")
 
-        self.pc = Register(manufacturer,build_date,"Program Counter",4,0)
+        self.pc = PC(manufacturer,build_date,"Program Counter",4,None)
         self.ir = Register(manufacturer,build_date,"Instruction Register",4,"")
         self.oR = ORegister(manufacturer,build_date,"Output Register", 4, "")
         self.visualizations = visualizations
