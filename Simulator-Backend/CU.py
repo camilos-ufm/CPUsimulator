@@ -162,6 +162,7 @@ class CU(IC):
     def decode(self, lineOfCode):
         stringFunction = lineOfCode.split()[0]
         function = self.intructionSetTable.get(stringFunction)
+        self.pc.setData(function)
         if (len(lineOfCode.split()) == 3):
             arguments = lineOfCode.split()[1:]
             arguments = list(map(int, arguments))
