@@ -6,10 +6,10 @@ class PC(Register):
 
     def __init__(self, manufacturer, build_date, purpose, storage, data):
         super().__init__(manufacturer, build_date, purpose, storage)
-        self.data = data
+        self.instructions = data
     
     def setData(self, data):
-        self.data = data
+        self.instructions = data
     
     def getData(self):
-        return self.data
+        return self.instructions
