@@ -11,4 +11,4 @@ dependencies:
 
 test:
     override:
-        - docker-compose run -d --no-deps node1
+        - docker-compose up --build
