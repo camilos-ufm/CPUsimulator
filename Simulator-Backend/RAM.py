@@ -12,3 +12,6 @@ class RAM(Memory):
     
     def getData(self, pos):
         return self.ram[pos]
+
+    def getRAM(self):
+        return self.ram
