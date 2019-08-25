@@ -1,13 +1,13 @@
-machine:
-    pre:
-        - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
-    services:
-        - docker
-
-dependencies:
-    override:
-        - sudo pip install -U docker-compose
-
-test:
-    override:
-        - docker-compose run -d
+version: 2
+jobs:
+  build:
+    docker:
+    - image: circleci/ruby:2.4.1
+    steps:
+    - checkout
+    - run: echo "A first hello"
+workflows:
+  version: 2
+  workflow:
+    jobs:
+    - build
