@@ -12,8 +12,8 @@ RUN apt-get install -y nginx nodejs
 RUN rm -v /etc/nginx/nginx.conf
 
 # Copy a configuration file from the current directory
-ADD nginx.conf /etc/nginx/
-ADD mime.types /etc/nginx/
+ADD nginx/nginx.conf /etc/nginx/
+ADD nginx/mime.types /etc/nginx/
 
 ADD /Simulator-Frontend/Unordered /usr/share/nginx/html/
 ADD /Simulator-Frontend/Unordered /var/www/html/
