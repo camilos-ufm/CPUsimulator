@@ -4,6 +4,7 @@ from RAM import RAM
 from ALU import ALU
 from Register import Register
 from ORegister import ORegister
+from Clock import Clock
 
 class CU(IC):
     #attributes for CU
@@ -26,6 +27,8 @@ class CU(IC):
         super().__init__(manufacturer, build_date, purpose)
         self.ram = RAM(manufacturer, build_date, "Random access memory", 16, ram) #RAM
         self.alu =  ALU(manufacturer, build_date, "Arithmetic and Logic unit") #ALU
+        #clock
+        self.clock = Clock(manufacturer,build_date,"This component manages the time", clock)
         #Registers
         self.a = Register(manufacturer,build_date,"Register A", 4, "")
         self.b = Register(manufacturer,build_date,"Register B", 4, "")
@@ -159,6 +162,7 @@ class CU(IC):
         for line in codelines:
             if(line[0]!="#"):
                 self.fetch(line)
+                self.clock.next()
 
 
     def fetch(self, codeline):

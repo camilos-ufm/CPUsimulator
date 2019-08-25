@@ -20,7 +20,7 @@ def hello():
 def main():
     
     ram = [1] * 16
-    cu = CU("intel", "2019-08-16", "manage everything", ram, 1.2, True)
+    cu = CU("intel", "2019-08-16", "manage everything", ram, 0, True)
 
     code = open("../.code", "r")
     codelines = code.readlines()
