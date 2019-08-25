@@ -50,7 +50,7 @@ class CU(IC):
         self.a.setData(data)
 
     def LD_B(self, RAMLoc):
-        pos =int(RAMLoc)
+        pos = int(RAMLoc)
         data = self.ram.getData(pos)
         self.b.setData(data)
 
@@ -159,7 +159,9 @@ class CU(IC):
 
     def decode(self, lineOfCode):
         stringFunction = lineOfCode.split()[0]
+        print(f"stringFunction: {stringFunction}")
         function = self.intructionSetTable.get(stringFunction)
+        print(f"function: {function}")
         self.pc.data += 1
         self.ir = function
         if (len(lineOfCode.split()) == 3):
@@ -171,7 +173,6 @@ class CU(IC):
         self.execute(function, arguments)
 
     def execute(self, function, param):
-        print(param)
         function(self, param)
 
     def printStatus(self):
