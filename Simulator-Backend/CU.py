@@ -4,7 +4,6 @@ from RAM import RAM
 from ALU import ALU
 from Register import Register
 from ORegister import ORegister
-from PC import PC
 
 class CU(IC):
     #attributes for CU
@@ -46,12 +45,12 @@ class CU(IC):
         return "message loaded into ORegister"
 
     def LD_A(self, RAMLoc):
-        pos = int(RAMLoc, 2)
+        pos = int(RAMLoc)
         data = self.ram.getData(pos)
         self.a.setData(data)
 
     def LD_B(self, RAMLoc):
-        pos =int(RAMLoc, 2)
+        pos =int(RAMLoc)
         data = self.ram.getData(pos)
         self.b.setData(data)
 
@@ -63,19 +62,15 @@ class CU(IC):
     def ILD_A (self, constant):
         constant=self.a
 
-    def STR_A (self, reg):
+    def STR_A (self, addr):
         data = self.a.getData()
-        for i in range(0, 16):
-            if self.ram.getData(i) == None:
-                self.ram.setData(i, data)
+        self.ram.setData(addr, data)
 
-    def STR_B (self, reg):
+    def STR_B (self, addr):
             data = self.b.getData()
-            for i in range(0, 16):
-                if self.ram.getData(i) == None:
-                    self.ram.setData(i, data)
+            self.ram.setData(addr, data)
 
-    def OR(self, arg):
+    def OR(self, arg):  
         reg1 = arg[0]               # extracts the first 2-bit from the 8bit value
         reg2 = arg[1]               # extracts the first 2-bit from the 8bit value
         return self.alu.OR(reg1, reg2)      # calls the alu logic operation 'or'
@@ -84,8 +79,8 @@ class CU(IC):
         self.b = const
 
     def ADD(self, arg):
-        reg1 = arg[0]                       # extracts the first 2-bit from the 8bit value
-        reg2 = arg[1]                       # extracts the first 2-bit from the 8bit value
+        reg1 = self.twoBitToRegLetter.get(arg[0]) # extracts the first 2-bit from the 8bit value
+        reg2 = self.twoBitToRegLetter.get(arg[1]) # extracts the first 2-bit from the 8bit value
         reg2 = self.alu.ADD(reg1,reg2)      # sets the addition to the second reg
         print(reg2)
 
@@ -136,9 +131,13 @@ class CU(IC):
     # Dictionary that returns for each 2bit code a letter corresponding to a reg
     twoBitToRegLetter = {
         "00": a,
+         "A": a,
         "01": b,
+         "B": b,
         "10": c,
-        "11": d
+         "C": c,
+        "11": d,
+         "D": d
     }
 
     def getFunction(self, opcode, arg):
