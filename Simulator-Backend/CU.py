@@ -31,8 +31,7 @@ class CU(IC):
         self.b = Register(manufacturer,build_date,"Register B", 4, "")
         self.c = Register(manufacturer,build_date,"Register C", 4, "")
         self.d = Register(manufacturer,build_date,"Register D", 4, "")
-
-        self.pc = Register(manufacturer,build_date,"Program Counter",4,0)
+        self.pc = Register(manufacturer,build_date,"Program Counter", 4, 0)
         self.ir = Register(manufacturer,build_date,"Instruction Register",4,"")
         self.oR = ORegister(manufacturer,build_date,"Output Register", 4, "")
         self.visualizations = visualizations
@@ -46,12 +45,12 @@ class CU(IC):
         return "message loaded into ORegister"
 
     def LD_A(self, RAMLoc):
-        pos = int(RAMLoc, 2)
+        pos = int(RAMLoc)
         data = self.ram.getData(pos)
         self.a.setData(data)
 
     def LD_B(self, RAMLoc):
-        pos =int(RAMLoc, 2)
+        pos = int(RAMLoc)
         data = self.ram.getData(pos)
         self.b.setData(data)
 
@@ -61,31 +60,33 @@ class CU(IC):
         return self.alu.AND(reg1,reg2)
 
     def ILD_A (self, constant):
-        constant=self.a
+        constant = int(constant)
+        self.a.setData(constant)
 
-    def STR_A (self, reg):
+    def STR_A (self, addr):
         data = self.a.getData()
-        for i in range(0, 16):
-            if self.ram.getData(i) == None:
-                self.ram.setData(i, data)
+        addr = int(addr)
+        data = int(data)
+        self.ram.setData(addr, data)
 
-    def STR_B (self, reg):
-            data = self.b.getData()
-            for i in range(0, 16):
-                if self.ram.getData(i) == None:
-                    self.ram.setData(i, data)
+    def STR_B (self, addr):
+        data = self.b.getData()
+        addr = int(addr)
+        data = int(data)
+        self.ram.setData(addr, data)
 
-    def OR(self, arg):
+    def OR(self, arg):  
         reg1 = arg[0]               # extracts the first 2-bit from the 8bit value
         reg2 = arg[1]               # extracts the first 2-bit from the 8bit value
         return self.alu.OR(reg1, reg2)      # calls the alu logic operation 'or'
 
-    def ILD_B(self, const):
-        self.b = const
+    def ILD_B(self, constant):
+        constant = int(constant)
+        self.b.setData(constant)
 
     def ADD(self, arg):
-        reg1 = arg[0]                       # extracts the first 2-bit from the 8bit value
-        reg2 = arg[1]                       # extracts the first 2-bit from the 8bit value
+        reg1 = self.twoBitToRegLetter.get(arg[0]) # extracts the first 2-bit from the 8bit value
+        reg2 = self.twoBitToRegLetter.get(arg[1]) # extracts the first 2-bit from the 8bit value
         reg2 = self.alu.ADD(reg1,reg2)      # sets the addition to the second reg
         print(reg2)
 
@@ -127,15 +128,22 @@ class CU(IC):
         "ADD": ADD,
         "1011": SUB,
         "SUB": SUB,
-
+        "1011": JMP,
+        "JMP": JMP,
+        "1100": JMP_N,
+        "JMP_N": JMP_N
     }
 
     # Dictionary that returns for each 2bit code a letter corresponding to a reg
     twoBitToRegLetter = {
         "00": a,
+         "A": a,
         "01": b,
+         "B": b,
         "10": c,
-        "11": d
+         "C": c,
+        "11": d,
+         "D": d
     }
 
     def getFunction(self, opcode, arg):
@@ -152,12 +160,15 @@ class CU(IC):
             if(line[0]!="#"):
                 self.fetch(line)
 
+
     def fetch(self, codeline):
         self.decode(codeline)
 
     def decode(self, lineOfCode):
         stringFunction = lineOfCode.split()[0]
         function = self.intructionSetTable.get(stringFunction)
+        self.pc.data += 1
+        self.ir = function
         if (len(lineOfCode.split()) == 3):
             arguments = lineOfCode.split()[1:]
             arguments = list(map(int, arguments))
@@ -167,7 +178,6 @@ class CU(IC):
         self.execute(function, arguments)
 
     def execute(self, function, param):
-        print(param)
         function(self, param)
 
     def printStatus(self):
