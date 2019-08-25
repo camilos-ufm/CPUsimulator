@@ -60,9 +60,10 @@ class CU(IC):
         return self.alu.AND(reg1,reg2)
 
     def ILD_A (self, constant):
-        self.a = constant
+        self.a.setData(constant)
 
     def STR_A (self, addr):
+        print(f"type of self.a {type(self.a)}")
         data = self.a.getData()
         self.ram.setData(addr, data)
 
@@ -75,8 +76,8 @@ class CU(IC):
         reg2 = arg[1]               # extracts the first 2-bit from the 8bit value
         return self.alu.OR(reg1, reg2)      # calls the alu logic operation 'or'
 
-    def ILD_B(self, const):
-        self.b = const
+    def ILD_B(self, constant):
+        self.b.setData(constant)
 
     def ADD(self, arg):
         reg1 = self.twoBitToRegLetter.get(arg[0]) # extracts the first 2-bit from the 8bit value
@@ -153,6 +154,7 @@ class CU(IC):
         for line in codelines:
             if(line[0]!="#"):
                 self.fetch(line)
+                print(f"Line:{line}")
 
     def fetch(self, codeline):
         self.decode(codeline)
