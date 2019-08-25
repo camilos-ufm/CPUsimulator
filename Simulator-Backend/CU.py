@@ -108,8 +108,8 @@ class CU(IC):
         print(f"Succesfuly read {self.b.getData()} into Register B")
 
     def ADD(self, arg):
-        reg1 = self.twoBitToRegLetter(self, arg[0]) # extracts the first 2-bit from the 8bit value
-        reg2 = self.twoBitToRegLetter(self, arg[1]) # extracts the first 2-bit from the 8bit value
+        reg1 = self.twoBitToRegLetter(arg[0]) # extracts the first 2-bit from the 8bit value
+        reg2 = self.twoBitToRegLetter(arg[1]) # extracts the first 2-bit from the 8bit value
         value1 = reg1.getData()
         value2 = reg2.getData()
         addition = self.alu.ADD(value1,value2)
