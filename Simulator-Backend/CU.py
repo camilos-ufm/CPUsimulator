@@ -60,7 +60,7 @@ class CU(IC):
         return self.alu.AND(reg1,reg2)
 
     def ILD_A (self, constant):
-        constant=self.a
+        self.a = constant
 
     def STR_A (self, addr):
         data = self.a.getData()
