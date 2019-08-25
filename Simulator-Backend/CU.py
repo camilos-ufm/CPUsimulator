@@ -50,33 +50,39 @@ class CU(IC):
     def LD_A(self, RAMLoc):
         pos = int(RAMLoc)
         data = self.ram.getData(pos)
+        print(f"Succesfully loaded RAM[{pos}]={data} into Register: A")
         self.a.setData(data)
 
     def LD_B(self, RAMLoc):
         pos = int(RAMLoc)
         data = self.ram.getData(pos)
+        print(f"Succesfully loaded RAM[{pos}]={data} into Register: B")
         self.b.setData(data)
 
     def AND(self, arg):
         reg1 = arg[0]
         reg2 = arg[1]
+        print(f"Register 1's letter is: {reg1}\nRegister 2's letter is: {reg2}")
         return self.alu.AND(reg1,reg2)
 
     def ILD_A (self, constant):
         constant = int(constant)
         self.a.setData(constant)
+        print(f"Succesfuly read {self.a.getData()} into Register A")
 
     def STR_A (self, addr):
         data = self.a.getData()
         addr = int(addr)
         data = int(data)
         self.ram.setData(addr, data)
+        print(f"Succesfuly wrote {self.a.getData()} into RAM address: {addr}")
 
     def STR_B (self, addr):
         data = self.b.getData()
         addr = int(addr)
         data = int(data)
         self.ram.setData(addr, data)
+        print(f"Succesfuly wrote {self.b.getData()} into RAM address: {addr}")
 
     def OR(self, arg):  
         reg1 = arg[0]               # extracts the first 2-bit from the 8bit value
@@ -86,6 +92,7 @@ class CU(IC):
     def ILD_B(self, constant):
         constant = int(constant)
         self.b.setData(constant)
+        print(f"Succesfuly read {self.b.getData()} into Register B")
 
     def ADD(self, arg):
         reg1 = self.twoBitToRegLetter.get(arg[0]) # extracts the first 2-bit from the 8bit value
@@ -170,7 +177,9 @@ class CU(IC):
 
     def decode(self, lineOfCode):
         stringFunction = lineOfCode.split()[0]
+        print(f"strFunction: {stringFunction}")
         function = self.intructionSetTable.get(stringFunction)
+        print(f"function: {function}")
         self.pc.data += 1
         self.ir = function
         if (len(lineOfCode.split()) == 3):
