@@ -13,19 +13,34 @@ response = {
 # convert into JSON:
 y = json.dumps(response)
 
-@app.route("/")
-def hello():
-    return y
-
 def main():
     
     ram = [1] * 16
-    cu = CU("intel", "2019-08-16", "manage everything", ram, 1.2, True)
+    cu = CU("intel", "2019-08-16", "manage everything", ram, 2.4, True)
 
     code = open("../.code", "r")
     codelines = code.readlines()
 
     cu.startInstructions(codelines)
+
+    response = {
+      "registers":{
+        "A": cu.a.getData(),
+        "B": cu.b.getData(),
+        "C": cu.c.getData(),
+        "D": cu.d.getData()
+        },
+      "RAM": cu.ram.getRAM(),
+      "CLOCK":cu.clock.freq,
+      "ALU":cu.alu.getFlags()
+    }
+
+    y = json.dumps(response)
+
+    @app.route("/")
+    def hello():
+        return y
+
 if __name__== "__main__":
   main()
-  app.run(debug=False)
+  app.run(host= '0.0.0.0')
