@@ -50,25 +50,28 @@ class CU(IC):
     def LD_A(self, RAMLoc):
         pos = int(RAMLoc)
         data = self.ram.getData(pos)
-        print(f"Succesfully loaded RAM[{pos}]={data} into Register: A")
+        print(f"Succesfully loaded 'RAM[{pos}]={data}' into Register: A")
         self.a.setData(data)
 
     def LD_B(self, RAMLoc):
         pos = int(RAMLoc)
         data = self.ram.getData(pos)
-        print(f"Succesfully loaded RAM[{pos}]={data} into Register: B")
+        print(f"Succesfully loaded 'RAM[{pos}]={data}' into Register: B")
         self.b.setData(data)
 
     def AND(self, arg):
         reg1 = arg[0]
         reg2 = arg[1]
-        print(f"Register 1's letter is: {reg1}\nRegister 2's letter is: {reg2}")
-        return self.alu.AND(reg1,reg2)
+        value1 = reg1.getData()
+        value2 = reg2.getData()
+        comparison = self.alu.AND(reg1, reg2)      # calls the alu logic operation 'or'
+        print(f"Register {reg1}: {value1}\nRegister {reg2}: {value2}\And: {comparison}")
+        return comparison
 
     def ILD_A (self, constant):
         constant = int(constant)
         self.a.setData(constant)
-        print(f"Succesfuly read {self.a.getData()} into Register A")
+        print(f"Succesfuly loaded {self.a.getData()} into Register A")
 
     def STR_A (self, addr):
         data = self.a.getData()
@@ -85,9 +88,13 @@ class CU(IC):
         print(f"Succesfuly wrote {self.b.getData()} into RAM address: {addr}")
 
     def OR(self, arg):  
-        reg1 = arg[0]               # extracts the first 2-bit from the 8bit value
-        reg2 = arg[1]               # extracts the first 2-bit from the 8bit value
-        return self.alu.OR(reg1, reg2)      # calls the alu logic operation 'or'
+        reg1 = self.twoBitToRegLetter.get(arg[0]) # extracts the first 2-bit from the 8bit value
+        reg2 = self.twoBitToRegLetter.get(arg[1]) # extracts the first 2-bit from the 8bit value
+        value1 = reg1.getData()
+        value2 = reg2.getData()
+        comparison = self.alu.OR(reg1, reg2)      # calls the alu logic operation 'or'
+        print(f"Register {reg1}: {value1}\nRegister {reg2}: {value2}\Or: {comparison}")
+        return comparison
 
     def ILD_B(self, constant):
         constant = int(constant)
@@ -97,13 +104,22 @@ class CU(IC):
     def ADD(self, arg):
         reg1 = self.twoBitToRegLetter.get(arg[0]) # extracts the first 2-bit from the 8bit value
         reg2 = self.twoBitToRegLetter.get(arg[1]) # extracts the first 2-bit from the 8bit value
-        reg2 = self.alu.ADD(reg1,reg2)      # sets the addition to the second reg
-        print(reg2)
+        value1 = reg1.getData()
+        value2 = reg2.getData()
+        addition = self.alu.ADD(value1,value2)
+        self.reg2.setData(addition)
+        print(f"Register {reg1}: {value1}\nRegister {reg2}: {value2}\Addition: {addition}")
 
     def SUB(self, arg):
-        reg1 = arg[0]               # extracts the first 2-bit from the 8bit value
-        reg2 = arg[1]               # extracts the first 2-bit from the 8bit value
-        reg2 = self.alu.SUB(reg1,reg2)      # sets the addition to the second reg
+        reg1 = self.twoBitToRegLetter.get(arg[0]) # extracts the first 2-bit from the 8bit value
+        reg2 = self.twoBitToRegLetter.get(arg[1]) # extracts the first 2-bit from the 8bit value
+        value1 = reg1.getData()
+        value2 = reg2.getData()
+        substraction = self.alu.SUB(value1,value2)
+        self.reg2.setData(substraction)
+        print(f"Register {reg1}: {value1}\nRegister {reg2}: {value2}\Substraction: {substraction}")
+
+        
 
     def JMP(self, arg):
         self.pc = arg
