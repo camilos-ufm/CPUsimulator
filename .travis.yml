@@ -8,6 +8,8 @@ machine:
 dependencies:
     override:
         - sudo pip install -U docker-compose
+        
+language: python
 
 test:
     override:
