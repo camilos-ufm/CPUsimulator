@@ -2,19 +2,22 @@ version: '3'
 services:
   flaskapp:
     #build: ./api.Dockerfile
-    image: andresry/cpusimulator:0.0
-    # build:
-    #   context: ./
-    #   dockerfile: api.Dockerfile
+    build:
+      context: ./
+      dockerfile: api.Dockerfile
     #   args:
     #     buildno: 1
+    #image: andresry/cpusimulator:0.0
     ports:
       - "5000:5000"
     networks:
       - web_nw
   nginx:
     #build: ./web.Dockerfile
-    image: andresry/webcpu:0.0
+    build:
+      context: ./
+      dockerfile: web.Dockerfile
+    #image: andresry/webcpu:0.0
     ports:
       - "5001:80"
     networks:
