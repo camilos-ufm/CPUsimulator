@@ -60,16 +60,20 @@ class CU(IC):
         return self.alu.AND(reg1,reg2)
 
     def ILD_A (self, constant):
+        constant = int(constant)
         self.a.setData(constant)
 
     def STR_A (self, addr):
-        print(f"type of self.a {type(self.a)}")
         data = self.a.getData()
+        addr = int(addr)
+        data = int(data)
         self.ram.setData(addr, data)
 
     def STR_B (self, addr):
-            data = self.b.getData()
-            self.ram.setData(addr, data)
+        data = self.b.getData()
+        addr = int(addr)
+        data = int(data)
+        self.ram.setData(addr, data)
 
     def OR(self, arg):  
         reg1 = arg[0]               # extracts the first 2-bit from the 8bit value
@@ -77,6 +81,7 @@ class CU(IC):
         return self.alu.OR(reg1, reg2)      # calls the alu logic operation 'or'
 
     def ILD_B(self, constant):
+        constant = int(constant)
         self.b.setData(constant)
 
     def ADD(self, arg):
@@ -154,16 +159,14 @@ class CU(IC):
         for line in codelines:
             if(line[0]!="#"):
                 self.fetch(line)
-                print(f"Line:{line}")
+
 
     def fetch(self, codeline):
         self.decode(codeline)
 
     def decode(self, lineOfCode):
         stringFunction = lineOfCode.split()[0]
-        print(f"stringFunction: {stringFunction}")
         function = self.intructionSetTable.get(stringFunction)
-        print(f"function: {function}")
         self.pc.data += 1
         self.ir = function
         if (len(lineOfCode.split()) == 3):
