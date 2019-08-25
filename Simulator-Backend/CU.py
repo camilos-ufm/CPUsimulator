@@ -38,7 +38,7 @@ class CU(IC):
 
     # Intruction Set Table 
     def OUTPUT(self, arg):
-        pos = int(arg) #convert binary to decimal
+        pos = int(arg,2) #convert binary to decimal
         data = self.ram.getData(pos) #retrieve data from RAM at position pos
         self.oR.setData(data) #set data into ORegister
 
