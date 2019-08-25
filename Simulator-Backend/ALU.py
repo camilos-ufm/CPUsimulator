@@ -36,3 +36,10 @@ class ALU(IC):
         else:
             pass
         return substraction
+
+    def getFlags(self):
+        flags = []
+        flags.append(self.zero)
+        flags.append(self.overflow)
+        flags.append(self.negative)
+        return flags
