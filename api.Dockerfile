@@ -14,4 +14,4 @@ WORKDIR /home/Simulator-Backend
 
 RUN pipenv install --ignore-pipfile
 
-CMD ["pipenv", "run", "python3", "Main.py"]
+CMD ["pipenv", "run", "python3", "Main.py"])
