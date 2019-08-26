@@ -21,7 +21,7 @@ def main():
     code = open("../Programs/Program3.code", "r")
     codelines = code.readlines()
 
-    cu.startInstructions(codelines)
+    cu.run(codelines)
 
     response = {
       "registers":{
