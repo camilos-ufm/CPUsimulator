@@ -130,6 +130,16 @@ class CU(IC):
             self.JMP(arg)
         else:
              pass
+
+    def ILD_C (self, constant):
+            constant = int(constant)
+            self.a.setData(constant)
+            print(f"Succesfuly loaded {self.c.getData()} into Register C")
+
+    def ILD_D (self, constant):
+            constant = int(constant)
+            self.a.setData(constant)
+            print(f"Succesfuly loaded {self.d.getData()} into Register D")
         
     # Dictionary with commands and functions
     intructionSetTable = {
