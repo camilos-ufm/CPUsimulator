@@ -107,7 +107,7 @@ class CU(IC):
         value1 = reg1.getData()
         value2 = reg2.getData()
         addition = self.alu.ADD(value1,value2)
-        self.reg2.setData(addition)
+        reg2.setData(addition)
         print(f"Register {reg1}: {value1}\nRegister {reg2}: {value2}\Addition: {addition}")
 
     def SUB(self, arg):
