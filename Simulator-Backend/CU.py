@@ -10,6 +10,7 @@ class CU(IC):
     #attributes for CU
     ram = [None] * 16
     alu = None
+    running = None
     #registers
     a = None
     b = None
@@ -122,7 +123,7 @@ class CU(IC):
         
 
     def JMP(self, arg):
-        self.pc = arg
+        self.pc.data = int(arg)
 
     def JMP_N(self, arg):
         if (self.alu.getNegative() is not 1):
@@ -195,8 +196,16 @@ class CU(IC):
             if(line[0]!="#"):
                 self.fetch(line)
                 self.clock.next()
+        
 
+    def run(self, codelines, pc=None):
+        if pc:
+            self.pc.data = pc
+        self.running = True
+        while self.running:
+            self.startInstructions(codelines)
 
+        
     def fetch(self, codeline):
         self.decode(codeline)
 
@@ -205,6 +214,7 @@ class CU(IC):
         print(f"opcode: {opcode}")
         function = self.getFunction(opcode)
         print(f"function: {function}")
+        print(f"TYPE: {self.pc.data}")
         self.pc.data += 1
         self.ir = function
         if (len(lineOfCode.split()) == 3):
