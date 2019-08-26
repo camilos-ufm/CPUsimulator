@@ -126,10 +126,10 @@ class CU(IC):
         self.pc.data = int(arg)
 
     def JMP_N(self, arg):
-        if (self.alu.getNegative() is not 1):
+        if (self.alu.getNegative() == 1):
             self.JMP(arg)
         else:
-            pass
+             pass
         
     # Dictionary with commands and functions
     intructionSetTable = {
@@ -214,7 +214,7 @@ class CU(IC):
         print(f"opcode: {opcode}")
         function = self.getFunction(opcode)
         print(f"function: {function}")
-        print(f"TYPE: {self.pc.data}")
+        print(f"PC: {self.pc.data}")
         self.pc.data += 1
         self.ir = function
         if (len(lineOfCode.split()) == 3):
