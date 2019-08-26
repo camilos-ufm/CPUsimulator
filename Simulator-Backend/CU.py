@@ -10,6 +10,7 @@ class CU(IC):
     #attributes for CU
     ram = [None] * 16
     alu = None
+    running = None
     #registers
     a = None
     b = None
@@ -50,25 +51,28 @@ class CU(IC):
     def LD_A(self, RAMLoc):
         pos = int(RAMLoc)
         data = self.ram.getData(pos)
-        print(f"Succesfully loaded RAM[{pos}]={data} into Register: A")
+        print(f"Succesfully loaded 'RAM[{pos}]={data}' into Register: A")
         self.a.setData(data)
 
     def LD_B(self, RAMLoc):
         pos = int(RAMLoc)
         data = self.ram.getData(pos)
-        print(f"Succesfully loaded RAM[{pos}]={data} into Register: B")
+        print(f"Succesfully loaded 'RAM[{pos}]={data}' into Register: B")
         self.b.setData(data)
 
     def AND(self, arg):
-        reg1 = arg[0]
-        reg2 = arg[1]
-        print(f"Register 1's letter is: {reg1}\nRegister 2's letter is: {reg2}")
-        return self.alu.AND(reg1,reg2)
+        letra1 = self.twoBitToRegLetter(arg[0])
+        letra2 = self.twoBitToRegLetter(arg[1])
+        value1 = letra1.getData()
+        value2 = letra2.getData()
+        comparison = self.alu.AND(value1, value2)      # calls the alu logic operation 'or'
+        print(f"Register {letra1}: {value1}\nRegister {letra2}: {value2}\And: {bool(comparison)}")
+        return comparison
 
     def ILD_A (self, constant):
         constant = int(constant)
         self.a.setData(constant)
-        print(f"Succesfuly read {self.a.getData()} into Register A")
+        print(f"Succesfuly loaded {self.a.getData()} into Register A")
 
     def STR_A (self, addr):
         data = self.a.getData()
@@ -85,9 +89,13 @@ class CU(IC):
         print(f"Succesfuly wrote {self.b.getData()} into RAM address: {addr}")
 
     def OR(self, arg):  
-        reg1 = arg[0]               # extracts the first 2-bit from the 8bit value
-        reg2 = arg[1]               # extracts the first 2-bit from the 8bit value
-        return self.alu.OR(reg1, reg2)      # calls the alu logic operation 'or'
+        reg1 = self.twoBitToRegLetter(arg[0]) # extracts the first 2-bit from the 8bit value
+        reg2 = self.twoBitToRegLetter(arg[1]) # extracts the first 2-bit from the 8bit value
+        value1 = reg1.getData()
+        value2 = reg2.getData()
+        comparison = self.alu.OR(reg1, reg2)      # calls the alu logic operation 'or'
+        print(f"Register {reg1}: {value1}\nRegister {reg2}: {value2}\Or: {bool(comparison)}")
+        return comparison
 
     def ILD_B(self, constant):
         constant = int(constant)
@@ -95,24 +103,43 @@ class CU(IC):
         print(f"Succesfuly read {self.b.getData()} into Register B")
 
     def ADD(self, arg):
-        reg1 = self.twoBitToRegLetter.get(arg[0]) # extracts the first 2-bit from the 8bit value
-        reg2 = self.twoBitToRegLetter.get(arg[1]) # extracts the first 2-bit from the 8bit value
-        reg2 = self.alu.ADD(reg1,reg2)      # sets the addition to the second reg
-        print(reg2)
+        reg1 = self.twoBitToRegLetter(arg[0]) # extracts the first 2-bit from the 8bit value
+        reg2 = self.twoBitToRegLetter(arg[1]) # extracts the first 2-bit from the 8bit value
+        value1 = reg1.getData()
+        value2 = reg2.getData()
+        addition = self.alu.ADD(value1,value2)
+        reg2.setData(addition)
+        print(f"Register {reg1}: {value1}\nRegister {reg2}: {value2}\Addition: {addition}")
 
     def SUB(self, arg):
-        reg1 = arg[0]               # extracts the first 2-bit from the 8bit value
-        reg2 = arg[1]               # extracts the first 2-bit from the 8bit value
-        reg2 = self.alu.SUB(reg1,reg2)      # sets the addition to the second reg
+        reg1 = self.twoBitToRegLetter(arg[0]) # extracts the first 2-bit from the 8bit value
+        reg2 = self.twoBitToRegLetter(arg[1]) # extracts the first 2-bit from the 8bit value
+        value1 = reg1.getData()
+        value2 = reg2.getData()
+        substraction = self.alu.SUB(value1,value2)
+        reg2.setData(substraction)
+        print(f"Register {reg1}: {value1}\nRegister {reg2}: {value2}\Substraction: {substraction}")
+
+        
 
     def JMP(self, arg):
-        self.pc = arg
+        self.pc.data = int(arg)
 
     def JMP_N(self, arg):
-        if (self.alu.getNegative() is not 1):
+        if (self.alu.getNegative() == 1):
             self.JMP(arg)
         else:
-            pass
+             pass
+
+    def ILD_C (self, constant):
+            constant = int(constant)
+            self.a.setData(constant)
+            print(f"Succesfuly loaded {self.c.getData()} into Register C")
+
+    def ILD_D (self, constant):
+            constant = int(constant)
+            self.a.setData(constant)
+            print(f"Succesfuly loaded {self.d.getData()} into Register D")
         
     # Dictionary with commands and functions
     intructionSetTable = {
@@ -136,7 +163,7 @@ class CU(IC):
         "ILD_B": ILD_B,
         "1001": ADD,
         "ADD": ADD,
-        "1011": SUB,
+        "1010": SUB,
         "SUB": SUB,
         "1011": JMP,
         "JMP": JMP,
@@ -145,22 +172,31 @@ class CU(IC):
     }
 
     # Dictionary that returns for each 2bit code a letter corresponding to a reg
-    twoBitToRegLetter = {
-        "00": a,
-         "A": a,
-        "01": b,
-         "B": b,
-        "10": c,
-         "C": c,
-        "11": d,
-         "D": d
-    }
+    def twoBitToRegLetter(self, param):
+        if(param == "00" or param == "A"):
+            return self.a
+        if(param == "01" or param == "B"):
+            return self.b
+        if(param == "10" or param == "C"):
+            return self.c
+        if(param == "11" or param == "D"):
+            return self.d
+    # twoBitToRegLetter = {
+    #     "00": "a",
+    #      "A": "a",
+    #     "01": "b",
+    #      "B": "b",
+    #     "10": "c",
+    #      "C": "c",
+    #     "11": "d",
+    #      "D": "d"
+    # }
 
-    def getFunction(self, opcode, arg):
-        return self.intructionSetTable[opcode](self, arg)
+    def getFunction(self, opcode):
+        return self.intructionSetTable.get(opcode)
 
-    def getRegLetter(self, twobit):
-        return self.twoBitToRegLetter.get(twobit)
+    def getRegLetter(self, twoBit):
+        return self.twoBitToRegLetter.get(twoBit)
 
     def initBios(self, string):
         pass
@@ -170,22 +206,31 @@ class CU(IC):
             if(line[0]!="#"):
                 self.fetch(line)
                 self.clock.next()
+        
 
+    def run(self, codelines, pc=None):
+        if pc:
+            self.pc.data = pc
+        self.running = True
+        while self.running:
+            self.startInstructions(codelines)
 
+        
     def fetch(self, codeline):
         self.decode(codeline)
 
     def decode(self, lineOfCode):
-        stringFunction = lineOfCode.split()[0]
-        print(f"strFunction: {stringFunction}")
-        function = self.intructionSetTable.get(stringFunction)
+        opcode = lineOfCode.split()[0]
+        print(f"opcode: {opcode}")
+        function = self.getFunction(opcode)
         print(f"function: {function}")
+        print(f"PC: {self.pc.data}")
         self.pc.data += 1
         self.ir = function
         if (len(lineOfCode.split()) == 3):
             arguments = lineOfCode.split()[1:]
-            arguments = list(map(int, arguments))
-            print(arguments)
+            arguments = list(map(str, arguments))
+            print(f"Arguments: {arguments}")
         else:
             arguments = lineOfCode.split()[1]
         self.execute(function, arguments)
