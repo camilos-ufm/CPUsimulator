@@ -62,16 +62,10 @@ class CU(IC):
     def AND(self, arg):
         letra1 = self.twoBitToRegLetter(arg[0])
         letra2 = self.twoBitToRegLetter(arg[1])
-        print(f"String1: {letra1}")
-        print(f"TypeOf reg1: {type(letra1)}")
-        print(f"Arg: {arg}")
-        print(f"Arg[0]: {arg[0]}")
-        print(f"Arg[0].twobit: {letra1}")
-        print(f"Register: {letra1}")
         value1 = letra1.getData()
         value2 = letra2.getData()
         comparison = self.alu.AND(value1, value2)      # calls the alu logic operation 'or'
-        print(f"Register {letra1}: {value1}\nRegister {letra2}: {value2}\And: {comparison}")
+        print(f"Register {letra1}: {value1}\nRegister {letra2}: {value2}\And: {bool(comparison)}")
         return comparison
 
     def ILD_A (self, constant):
@@ -99,7 +93,7 @@ class CU(IC):
         value1 = reg1.getData()
         value2 = reg2.getData()
         comparison = self.alu.OR(reg1, reg2)      # calls the alu logic operation 'or'
-        print(f"Register {reg1}: {value1}\nRegister {reg2}: {value2}\Or: {comparison}")
+        print(f"Register {reg1}: {value1}\nRegister {reg2}: {value2}\Or: {bool(comparison)}")
         return comparison
 
     def ILD_B(self, constant):
@@ -122,7 +116,7 @@ class CU(IC):
         value1 = reg1.getData()
         value2 = reg2.getData()
         substraction = self.alu.SUB(value1,value2)
-        self.reg2.setData(substraction)
+        reg2.setData(substraction)
         print(f"Register {reg1}: {value1}\nRegister {reg2}: {value2}\Substraction: {substraction}")
 
         
