@@ -18,10 +18,10 @@ def main():
     ram = [1] * 16
     cu = CU("intel", "2019-08-16", "manage everything", ram, 2.4, True)
 
-    code = open("../Programs/Program1.code", "r")
+    code = open("../Programs/Program3.code", "r")
     codelines = code.readlines()
 
-    cu.startInstructions(codelines)
+    cu.run(codelines)
 
     response = {
       "registers":{
