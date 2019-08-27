@@ -1,0 +1,7 @@
+# Loads two numbers into regs 
+0100 45
+1000 45
+# Compares whatever numbers are stored on the Registers
+AND 00 01
+OR 00 01
+HALT
