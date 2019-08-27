@@ -195,8 +195,8 @@ class CU(IC):
     def getFunction(self, opcode):
         return self.intructionSetTable.get(opcode)
 
-    def getRegLetter(self, twoBit):
-        return self.twoBitToRegLetter.get(twoBit)
+    """ def getRegLetter(self, twoBit):
+        return self.twoBitToRegLetter.get(twoBit) """
 
     def initBios(self, string):
         pass

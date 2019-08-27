@@ -1,4 +1,5 @@
 from CU import CU
+from Bios import Bios
 from flask import Flask
 from flask_cors import CORS
 import json 
@@ -15,13 +16,17 @@ y = json.dumps(response)
 
 def main():
     
+    bios = Bios()
+    yml = open("../bios.yml", "r")
+    ymlines = yml.readlines()
+    bios.setValues(ymlines)
     ram = [1] * 16
-    cu = CU("intel", "2019-08-16", "manage everything", ram, 2.4, True)
+    cu = CU("intel", "2019-08-16", "manage everything", ram, bios.clock, True)
 
-    code = open("../Programs/Program3.code", "r")
+    code = open("../Programs/Program0.code", "r")
     codelines = code.readlines()
 
-    cu.run(codelines)
+    #cu.run(codelines)
 
     response = {
       "registers":{
