@@ -140,6 +140,15 @@ class CU(IC):
             constant = int(constant)
             self.a.setData(constant)
             print(f"Succesfuly loaded {self.d.getData()} into Register D")
+
+    def reset(self):
+        self.pc = 0 
+        self.ir = 0 
+        self.running = False
+
+    def HALT(self, data):
+        print("HALTING...")
+        self.reset()
         
     # Dictionary with commands and functions
     intructionSetTable = {
@@ -168,7 +177,13 @@ class CU(IC):
         "1011": JMP,
         "JMP": JMP,
         "1100": JMP_N,
-        "JMP_N": JMP_N
+        "JMP_N": JMP_N,
+        "1101": ILD_C,
+        "ILD_C": ILD_C,
+        "ILD_D": ILD_D,
+        "1110": ILD_D,
+        "HALT": HALT,
+        "1111": HALT
     }
 
     # Dictionary that returns for each 2bit code a letter corresponding to a reg
@@ -231,12 +246,16 @@ class CU(IC):
             arguments = lineOfCode.split()[1:]
             arguments = list(map(str, arguments))
             print(f"Arguments: {arguments}")
-        else:
+        elif (len(lineOfCode.split()) == 2):
             arguments = lineOfCode.split()[1]
+        else:
+            arguments = None
         self.execute(function, arguments)
 
     def execute(self, function, param):
         function(self, param)
 
     def printStatus(self):
-        return "status:"     
+        return f"Running?: {bool(self.running)}" 
+
+   
