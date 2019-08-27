@@ -50,7 +50,8 @@ new Vue({
                 this.getResult = response.data
                 console.log(this.getResult)
                 //this.getResult = response.data.json();
-            console.log('SUCCESS!!');
+                console.log('SUCCESS!!');
+                alert('File sent');
             
           })
           .catch(function(){
