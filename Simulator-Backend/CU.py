@@ -1,4 +1,3 @@
-
 from IC import *
 from RAM import RAM
 from ALU import ALU
@@ -20,6 +19,7 @@ class CU(IC):
     #special register for output
     pc = None
     ir = None
+    irb = None
     oR = None
     clock = None
     visualizations = None
@@ -37,6 +37,7 @@ class CU(IC):
         self.d = Register(manufacturer,build_date,"Register D", 4, "")
         self.pc = Register(manufacturer,build_date,"Program Counter", 4, 0)
         self.ir = Register(manufacturer,build_date,"Instruction Register",4,"")
+        self.irb = Register(manufacturer,build_date,"Instruction Register",4,"")
         self.oR = ORegister(manufacturer,build_date,"Output Register", 4, "")
         self.visualizations = visualizations
 
@@ -140,6 +141,15 @@ class CU(IC):
             constant = int(constant)
             self.a.setData(constant)
             print(f"Succesfuly loaded {self.d.getData()} into Register D")
+
+    def reset(self):
+        self.pc.data = 0 
+        self.ir = self.irb
+        self.running = False
+
+    def HALT(self, data):
+        print("HALTING...")
+        self.reset()
         
     # Dictionary with commands and functions
     intructionSetTable = {
@@ -168,7 +178,13 @@ class CU(IC):
         "1011": JMP,
         "JMP": JMP,
         "1100": JMP_N,
-        "JMP_N": JMP_N
+        "JMP_N": JMP_N,
+        "1101": ILD_C,
+        "ILD_C": ILD_C,
+        "ILD_D": ILD_D,
+        "1110": ILD_D,
+        "HALT": HALT,
+        "1111": HALT
     }
 
     # Dictionary that returns for each 2bit code a letter corresponding to a reg
@@ -195,8 +211,8 @@ class CU(IC):
     def getFunction(self, opcode):
         return self.intructionSetTable.get(opcode)
 
-    def getRegLetter(self, twoBit):
-        return self.twoBitToRegLetter.get(twoBit)
+    """ def getRegLetter(self, twoBit):
+        return self.twoBitToRegLetter.get(twoBit) """
 
     def initBios(self, string):
         pass
@@ -231,12 +247,16 @@ class CU(IC):
             arguments = lineOfCode.split()[1:]
             arguments = list(map(str, arguments))
             print(f"Arguments: {arguments}")
-        else:
+        elif (len(lineOfCode.split()) == 2):
             arguments = lineOfCode.split()[1]
+        else:
+            arguments = None
         self.execute(function, arguments)
 
     def execute(self, function, param):
         function(self, param)
 
     def printStatus(self):
-        return "status:"     
+        return f"Running?: {bool(self.running)}" 
+
+   
