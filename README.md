@@ -1,13 +1,9 @@
 <h1 align="center">
   <a href="https://github.com/denysdovhan/spaceship-prompt">
-    <img alt="spaceship →~ prompt" src="https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&ved=2ahUKEwjBzcuxjKLkAhUSwlkKHahpCdwQjRx6BAgBEAQ&url=https%3A%2F%2Fpixabay.com%2Fvectors%2Fcpu-processor-intel-amd-chip-152656%2F&psig=AOvVaw27soldjBh8raIEdF04OI4C&ust=1566962485384718" width="400">
+    <img alt="cpu" src="https://github.com/lisos-ufm/CPUsimulator/blob/andr/Simulator-Frontend/Unordered/cpu.png" width="400">
   </a>
   <br>🚀 CPU Simulator <br>
 </h1>
-
-<h4 align="center">
-  <a href="http://zsh.org" target="_blank"><code>Zsh</code></a> prompt for Astronauts.
-</h4>
 
 <div align="center">
   <h4>
@@ -28,7 +24,7 @@
 
 CPU simulator is an app that provides a set of instruction in order to recreate the functions of an actual CPU.
 
-<sub>Vist <a href="#">Troubleshooting</a> for similar setup and find more..</sub>
+<sub>Vist <a href="#">Troubleshooting</a> to find more.</sub>
 
 ## Features and Technologies
 
