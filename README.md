@@ -1,17 +1,17 @@
 <h1 align="center">
   <a href="https://github.com/denysdovhan/spaceship-prompt">
-    <img alt="cpu" src="https://github.com/lisos-ufm/CPUsimulator/blob/andr/Simulator-Frontend/Unordered/cpu.png" width="400">
+    <img alt="cpu" src="https://github.com/lisos-ufm/CPUsimulator/blob/andr/Simulator-Frontend/Unordered/cpu2.png" width="400">
   </a>
   <br>🚀 CPU Simulator <br>
 </h1>
 
 <div align="center">
   <h4>
-    <a href="#">Website</a> |
-    <a href="#installing">Install</a> |
-    <a href="#features">Features</a> |
-    <a href="./docs/Options.md">Options</a> |
-    <a href="./docs/API.md">API</a>
+    <a href="#Features and Technologies">Features</a> |
+    <a href="#Requirements">Requirements</a> |
+    <a href="#Installing and running the app">Installing</a> |
+    <a href="#Contributing">Contributing</a> |
+    <a href="#License">License</a>
   </h4>
 </div>
 
