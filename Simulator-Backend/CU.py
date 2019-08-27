@@ -1,4 +1,3 @@
-
 from IC import *
 from RAM import RAM
 from ALU import ALU
@@ -20,6 +19,7 @@ class CU(IC):
     #special register for output
     pc = None
     ir = None
+    irb = None
     oR = None
     clock = None
     visualizations = None
@@ -37,6 +37,7 @@ class CU(IC):
         self.d = Register(manufacturer,build_date,"Register D", 4, "")
         self.pc = Register(manufacturer,build_date,"Program Counter", 4, 0)
         self.ir = Register(manufacturer,build_date,"Instruction Register",4,"")
+        self.irb = Register(manufacturer,build_date,"Instruction Register",4,"")
         self.oR = ORegister(manufacturer,build_date,"Output Register", 4, "")
         self.visualizations = visualizations
 
@@ -142,8 +143,8 @@ class CU(IC):
             print(f"Succesfuly loaded {self.d.getData()} into Register D")
 
     def reset(self):
-        self.pc = 0 
-        self.ir = 0 
+        self.pc.data = 0 
+        self.ir = self.irb
         self.running = False
 
     def HALT(self, data):

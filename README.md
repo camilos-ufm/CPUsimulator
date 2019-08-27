@@ -16,6 +16,11 @@ docker-compose down -v
 
 docker ps
 
-docker-compose up --build
 
-editing to test
+#To run it in debug mode / check the time
+build the image from api.Dockerfile
+docker run -it -p 5000:5000 cpusimulator:0.0
+
+
+#To run it in production mode
+docker-compose up --build

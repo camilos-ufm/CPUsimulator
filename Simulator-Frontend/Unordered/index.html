@@ -262,14 +262,25 @@
                             <div class="text-widget">
                                 <h3>Simulator Monitor</h3>
                                 <div id="app">
-                                        <h2>Sample Get:</h2>
-                                        <button v-on:click="getSampleData()">Click to Get Sample data</button>
+                                        <h2>CPU data:</h2>
+                                        <button v-on:click="getSampleData()">Click to refresh</button>
                                         <div>{{getResult}}</div>
-                                        <h2>Sample Post:</h2>
+                                        <h2>Send code file:</h2>
+                                        <!--
                                         <button v-on:click="postSampleData()">Click to Post Sample data</button>
-                                        <div>{{postResult}}</div>
+                                        <div>{{postResult}}</div>-->
+                                        <template>
+                                            <div class="container">
+                                              <div class="large-12 medium-12 small-12 cell">
+                                                <label>File
+                                                  <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
+                                                </label>
+                                                  <button v-on:click="submitFile()">Submit</button>
+                                              </div>
+                                            </div>
+                                          </template>
                                     </div>
-                                <p>some description lol</p>
+                                <p></p>
                                 <div class="clearfix"></div>
                                     </div><!-- end col-lg-4 --> 
                                 </div><!-- end row -->      
@@ -326,6 +337,7 @@
     <script src="video_background.js"></script> 
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="vue.js"></script> 
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
         jQuery(document).ready(function($) {
             var Video_back = new video_background($("#home"), { 
