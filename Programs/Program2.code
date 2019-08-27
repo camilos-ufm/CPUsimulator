@@ -4,3 +4,4 @@
 # Compares whatever numbers are stored on the Registers
 AND 00 01
 OR 00 01
+HALT
