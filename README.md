@@ -1,7 +1,6 @@
 <h1 align="center">
-  <a href="https://github.com/denysdovhan/spaceship-prompt">
+  <!-- a href="https://github.com/denysdovhan/spaceship-prompt" -->
     <img alt="cpu" src="https://github.com/lisos-ufm/CPUsimulator/blob/andr/Simulator-Frontend/Unordered/cpu2.png" width="400">
-  </a>
   <br>🚀 CPU Simulator <br>
 </h1>
 
